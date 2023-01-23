@@ -38,10 +38,11 @@ int main(int argc, char **argv)
 		 * Continue to look for next token in the string 
 		 * after the last time it was called, using the delimiters
 		 */
+		arg = strtok(NULL, " \n\t\r");
 		if (strcmp(opcode, "push") == 0)
-			push();
+			push(&stack, line_number, arg);
 		else if (strcmp(opcode, "pall") == 0)
-			pall();
+			pall(&stack, line_number, arg);
 		else
 		{
 			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
