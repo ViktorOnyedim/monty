@@ -1,12 +1,12 @@
 #include "monty.h"
-#include "opcode.h"
+/*#include "opcode.h"*/
 
 int main(int argc, char **argv)
 {
 	
 	FILE *file;
 	char line[1024];
-	char *opcode
+	char *opcode;
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
 
