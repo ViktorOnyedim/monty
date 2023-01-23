@@ -48,3 +48,15 @@ void pall(stack_t **stack, unsigned int line_number, char *arg)
 		temp = temp -> next;
 	}
 }
+
+/* Deallocate memory previously allocated for stack */
+void free_stack(stack_t *stack)
+{
+	stack_t *temp;
+	while(stack != NULL)
+	{
+		temp = stack -> next;
+		free(stack);
+		stack = temp;
+	}
+}
