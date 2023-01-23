@@ -1,14 +1,14 @@
 #include "monty.h"
+#include "opcode.h"
 
 int main(int argc, char **argv)
 {
+	
 	FILE *file;
-	/*char *lineptr = NULL;
-	__attribute__((unused)) size_t len = 0;*/
 	char line[1024];
+	char *opcode
 	unsigned int line_number = 0;
-	char *opcode, __attribute__((unused)) *arg;
-	__attribute__((unused)) stack_t *stack = NULL;
+	stack_t *stack = NULL;
 
 	if (argc != 2)
 	{
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		line_number++;
-		opcode = strtok(line, "\n\t\r");
+		opcode = strtok(line, " \n\t\r");
 
 		/* Handle empty line or comments */
 		if (opcode == NULL || opcode[0] == '#')
@@ -38,21 +38,27 @@ int main(int argc, char **argv)
 		 * Continue to look for next token in the string 
 		 * after the last time it was called, using the delimiters
 		 */
-		arg = strtok(NULL, " \n\t\r");
-		if (strcmp(opcode, "push") == 0)
-			push(&stack, line_number, arg);
-		else if (strcmp(opcode, "pall") == 0)
-			pall(&stack, line_number, arg);
-		else
+		execute_instruction(opcode, &stack, line_number);
+	}
+	/*
+		for (i = 0; opcodes[i].opcode != NULL; i++)
+		{
+			if (strcmp(opcode, opcodes[i].opcode) == 0)
+			{
+				opcodes[i].f(&stack, line_number);
+				break;
+			}
+		}
+		if (opcodes[i].opcode == NULL)
 		{
 			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-		exit(EXIT_FAILURE);
+			free_stack(stack);
+			exit(EXIT_FAILURE);
 		}
-	}
+	}*/
 
-	free_stack(stack);	
-
+	free_stack(stack);
 	fclose(file);
 
-	return (0);
+	return (EXIT_SUCCESS);
 }
